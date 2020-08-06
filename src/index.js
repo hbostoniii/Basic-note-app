@@ -1,17 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const DisplayMessages = (props) => {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  return (
+    <div
+      style={{
+        backgroundColor: "lavender",
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <p style={{ fontSize: "3rem" }}>
+        Type in a new <strong>Message</strong>:
+      </p>
+      <input onChange={(e) => setInput(e.target.value)} value={input} />
+      <button
+        onClick={() => {
+          setMessages([...messages, input]);
+          setInput("");
+        }}
+      >
+        Submit
+      </button>
+      <ul>
+        {messages.map((message, i) => {
+          return <li key={i}>{message}</li>;
+        })}
+      </ul>
+    </div>
+  );
+};
+
+ReactDOM.render(<DisplayMessages />, document.getElementById("root"));
